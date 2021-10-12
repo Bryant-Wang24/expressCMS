@@ -5,12 +5,18 @@ const ManagerModel = require('../../model/managerModel')
 
 router.get("/", (req, res) => {
     // 查询数据
+    ManagerModel.find({}, (err, data) => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data);
+    })
     res.send("管理员管理")
 })
 router.get("/add", (req, res) => {
     const result = new ManagerModel({
-        username: '张三',
-        password: '123456'
+        username: '李四',
+        password: '123456789'
     })
     result.save((err) => {
         if (err) {
