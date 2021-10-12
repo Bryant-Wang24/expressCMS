@@ -1,14 +1,20 @@
 const express = require("express")
 const tools = require('../../model/tools')
+const NavModel = require('../../model/navModel')
 
 const router = express.Router()
 
 router.get("/", (req, res) => {
     res.send("导航列表")
 })
-router.get("/add", (req, res) => {
-    res.render("admin/nav/add")
-    // res.send("增加导航")
+router.get("/add", async (req, res) => {
+    const result = new NavModel({
+        title: "首页",
+        url: "www.itying.com"
+    })
+    await result.save()
+    // res.render("admin/nav/add")
+    res.send('增加导航成功')
 })
 router.get("/edit", (req, res) => {
     res.send("修改导航")
