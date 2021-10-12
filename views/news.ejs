@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>我是ejs模板引擎</h2>
+    <p><%=title.username%></p>
+
+    <!-- 这里的-可以解析html -->
+    <%-h%>
+    <!-- 条件判断 -->
+    <%if(score>=70){%>
+    <p>及格</p>
+    <%}else{%> 不及格 <%}%>
+    <!-- 循环 -->
+    <ul>
+      <%for(let i=0;i<list.length;i++){%>
+        <li><%=list[i]%></li>
+      <%}%>
+    </ul>
+
+    <!-- 模板里面引入其他的模板 -->
+    <%- include('footer.ejs')%>
+  </body>
+</html>
