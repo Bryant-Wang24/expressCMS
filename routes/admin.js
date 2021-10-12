@@ -5,6 +5,7 @@ const router = express.Router()
 const login = require("./admin/login")
 const nav = require("./admin/nav")
 const user = require("./admin/user")
+const manager = require('./admin/manager')
 
 
 
@@ -15,6 +16,7 @@ router.get("/", (req, res) => {
 // 挂载路由
 router.use('/login', login)
 router.use('/nav', nav)
+router.use('/manager', manager)
 router.use('/user', user)
 
 module.exports = router
