@@ -3,14 +3,10 @@ const router = express.Router()
 
 const ManagerModel = require('../../model/managerModel')
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
     // 查询数据
-    ManagerModel.find({}, (err, data) => {
-        if (err) {
-            return console.log(err);
-        }
-        console.log(data);
-    })
+    const result = await ManagerModel.find({},)
+    console.log(result);
     res.send("管理员管理")
 })
 router.get("/add", (req, res) => {
