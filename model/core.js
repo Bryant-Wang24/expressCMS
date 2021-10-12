@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const config = require('../config/config')
 // 2、建立连接
-mongoose.connect(config.dbUrl, { useNewUrlParser: true }, function (err) {
+mongoose.connect(config.dbUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function (err) {
     if (err) {
         return console.log(err);
     }
