@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 router.get("/add", async (req, res) => {
     const result = new NavModel({
         title: "首页",
-        url: "www.itying.com"
+        url: "www.baidu.com"
     })
     await result.save()
     // res.render("admin/nav/add")
