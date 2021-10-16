@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 
-const ManagerModel = require('../../model/managerModel')
+// const ManagerModel = require('../../model/managerModel')
 
 router.get("/", async (req, res) => {
     // 查询数据

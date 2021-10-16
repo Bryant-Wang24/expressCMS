@@ -1,6 +1,20 @@
 const express = require('express')
 const app = express()
-const ejs = require('ejs')
+var session = require('express-session')
+// const ejs = require('ejs')
+
+// 配置session中间件
+app.use(session({
+    secret: 'this is session',
+    name: "itying",//修改session对应cookie的名称
+    resave: false,//强制保存session即使它并没有变化
+    saveUninitialized: true,//强制将未初始化的session存储
+    cookie: {
+        maxAge: 1000 * 60 * 30,
+        secure: false//true表示只有https协议才能访问cookie
+    },
+    rolling: true//在每次请求时强行设置cookie，这将重置cookie过期时间（默认：false）
+}))
 
 app.set("view engine", "ejs")
 // 配置静态web目录
