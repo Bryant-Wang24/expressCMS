@@ -17,10 +17,18 @@ router.post("/dologin", (req, res) => {
 
     // 2、判断验证码是否正确
     if (verify.toLowerCase() !== req.session.captcha.toLowerCase()) {
-        res.send("验证码错误")
+        // 图形验证码失败
+        res.render("admin/public/error.ejs", {
+            "redirectUrl": "/admin/login",//失败后跳转到原页面
+            "message": "图形验证码输入错误"
+        })
         return
     }
-    res.send("验证成功")
+    // 图形验证码成功
+    res.render("admin/public/success.ejs", {
+        "redirectUrl": "/admin",//成功后跳转的页面
+        "message": "登陆成功"
+    })
 })
 
 router.get('/verify', function (req, res) {
