@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 var svgCaptcha = require('svg-captcha');
 const ManagerModel = require('../../model/managerModel')
-const md5 = require('md5');
+const { md5 } = require("../../model/tools")
 
 router.get("/", async (req, res) => {
     // let result = new ManagerModel({
@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
     //     password: md5("123456")
     // })
     // await result.save()
+    console.log('一致性');
     res.render("admin/login/login.ejs")
 })
 

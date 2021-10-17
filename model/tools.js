@@ -3,6 +3,7 @@ const multer = require('multer')
 const path = require('path')
 var sd = require('silly-datetime');
 const mkdirp = require('mkdirp')
+const md5 = require('md5')
 // const upload = multer({ dest: 'static/uploads' })
 
 let tools = {
@@ -27,6 +28,13 @@ let tools = {
         })
         const upload = multer({ storage: storage })
         return upload
+    },
+    md5(str) {
+        return md5(str)
+    },
+    getUnix() {
+        const d = new Date()
+        return d.getTime()
     }
 }
 
