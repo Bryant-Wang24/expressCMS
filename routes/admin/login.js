@@ -56,4 +56,8 @@ router.get('/verify', function (req, res) {
     res.type('svg');
     res.status(200).send(captcha.data);
 });
+router.get('/loginout', function (req, res) {
+    req.session.userinfo = null;//保存验证码
+    res.redirect("/admin/loginout")
+});
 module.exports = router
