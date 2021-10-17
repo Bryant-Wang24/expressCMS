@@ -1,9 +1,15 @@
 const express = require("express")
 const router = express.Router()
 var svgCaptcha = require('svg-captcha');
+const ManagerModel = require('../../model/managerModel')
+const md5 = require('md5');
 
-router.get("/", (req, res) => {
-    // res.send("用户登陆页面")
+router.get("/", async (req, res) => {
+    let result = new ManagerModel({
+        username: "admin",
+        password: md5("123456")
+    })
+    await result.save()
     res.render("admin/login/login.ejs")
 })
 
