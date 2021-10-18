@@ -14,8 +14,57 @@ router.get("/", async (req, res) => {
 })
 
 router.get('/edit', async (req, res) => {
-    res.render("admin/manager/edit.ejs")
+    // 获取要修改的数据
+    const id = req.query.id
+    const result = await ManagerModel.find({ "_id": id })
+    console.log('要修改的数据', result);
+    if (result.length > 0) {
+        res.render("admin/manager/edit.ejs", {
+            list: result[0]
+        })
+    } else {
+        res.render("/admin/manager")
+    }
 })
+router.post('/doedit', async (req, res) => {
+    const id = req.body.id
+    const password = req.body.password
+    const rpassword = req.body.rpassword
+    const email = req.body.email
+    const mobile = req.body.mobile
+    const status = req.body.status
+    if (password.length > 0) {//修改密码
+        if (password.length < 6) {
+            res.render("admin/public/error.ejs", {
+                "redirectUrl": "/admin/manager/edit?id=" + id,
+                "message": "密码长度不能小于6位"
+            })
+            return
+        }
+        if (password !== rpassword) {
+            res.render("admin/public/error.ejs", {
+                "redirectUrl": "/admin/manager/edit?id=" + id,
+                "message": "两次输入的密码不一致"
+            })
+            return
+        }
+        await ManagerModel.updateOne({ "_id": id }, {
+            "email": email,
+            "mobile": mobile,
+            "password": md5(password),
+            "status": status
+        })
+    } else {//不修改密码，只修改其他信息
+        await ManagerModel.updateOne({ "_id": id }, {
+            "email": email,
+            "mobile": mobile,
+            "password": md5(password),
+            "status": status
+        })
+    }
+    res.redirect("/admin/manager")
+})
+
 
 router.get("/add", (req, res) => {
     // const result = new ManagerModel({
@@ -41,6 +90,7 @@ router.post('/doadd', async (req, res) => {
     const rpassword = req.body.rpassword
     const email = req.body.email
     const mobile = req.body.mobile
+    const status = req.body.status
     // 验证数据是否合法
     if (username === '') {
         res.render("admin/public/error.ejs", {
@@ -78,6 +128,7 @@ router.post('/doadd', async (req, res) => {
             password: md5(password),
             email,
             mobile,
+            status,
             addtime: getUnix()
         })
         await addResult.save()
