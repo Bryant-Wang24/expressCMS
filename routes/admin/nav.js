@@ -1,20 +1,35 @@
 const express = require("express")
 const tools = require('../../model/tools')
 const NavModel = require('../../model/navModel')
+const { getUnix } = require("../../model/tools")
 
 const router = express.Router()
 
-router.get("/", (req, res) => {
-    res.send("导航列表")
+router.get("/", async (req, res) => {
+    const result = await NavModel.find({})
+    res.render("admin/nav/index.ejs", {
+        list: result
+    })
 })
 router.get("/add", async (req, res) => {
-    const result = new NavModel({
-        title: "首页",
-        url: "www.baidu.com"
-    })
+    res.render("admin/nav/add.ejs")
+})
+router.post("/doadd", async (req, res) => {
+    // res.render("admin/nav/add.ejs")
+    // const title = req.body.title
+    // const link = req.body.link
+    // const position = req.body.position
+    // const is_opennew = req.body.is_opennew
+    // const sort = req.body.sort
+    // const status = req.body.status
+    const result = new NavModel(Object.assign(req.body, { add_time: getUnix() }))
     await result.save()
-    // res.render("admin/nav/add")
-    res.send('增加导航成功')
+
+    res.render('admin/public/success.ejs', {
+        message: "增加数据成功",
+        redirectUrl: '/admin/nav'
+    })
+
 })
 router.get("/edit", (req, res) => {
     res.send("修改导航")
