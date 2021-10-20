@@ -4,7 +4,10 @@ const { multer } = require("../../model/tools")
 const router = express.Router()
 
 router.get("/", async (req, res) => {
-    res.send("轮播图列表")
+    const result = await focusModel.find({})
+    res.render("admin/focus/index.ejs", {
+        list: result
+    })
 })
 
 router.get('/add', (req, res) => {
