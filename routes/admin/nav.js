@@ -31,9 +31,6 @@ router.post("/doadd", async (req, res) => {
     })
 
 })
-router.get("/edit", (req, res) => {
-    res.send("修改导航")
-})
 router.post("/doadd", tools.multer().single('uploadedfile'), (req, res) => {
     // 获取表单传过来的数据
     // const body = req.body
@@ -44,8 +41,26 @@ router.post("/doadd", tools.multer().single('uploadedfile'), (req, res) => {
     })
     console.log(req.file, req.body)
 })
-router.post("/doedit", (req, res) => {
-    res.send("执行修改")
+
+router.get("/edit", async(req, res) => {
+    const id = req.query.id
+    const result = await NavModel.find({"_id":id})
+    if(result.length>0){
+        res.render("admin/nav/edit.ejs",{
+            list:result[0]
+        })
+    }else{
+        res.render("/admin/nav")
+    }
 })
+router.post("/doedit", async(req, res) => {
+    await NavModel.updateOne({"_id":req.body.id},req.body)
+    res.render('admin/public/success.ejs', {
+        message: "修改数据成功",
+        redirectUrl: '/admin/nav'
+    })
+   
+})
+
 
 module.exports = router
