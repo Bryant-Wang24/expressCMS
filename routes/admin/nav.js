@@ -68,5 +68,17 @@ router.post("/doedit", async(req, res) => {
     }     
 })
 
+router.get('/delete', async (req, res) => {
+    // 获取要修改的数据
+    const id = req.query.id
+    const result = await NavModel.deleteOne({ "_id": id })
+    console.log('要删除的数据', result);
+    res.render('admin/public/success.ejs', {
+        message: "删除数据成功",
+        redirectUrl: '/admin/nav'
+    })
+})
+
+
 
 module.exports = router
