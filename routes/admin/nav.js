@@ -54,12 +54,18 @@ router.get("/edit", async(req, res) => {
     }
 })
 router.post("/doedit", async(req, res) => {
-    await NavModel.updateOne({"_id":req.body.id},req.body)
-    res.render('admin/public/success.ejs', {
+    try {
+        await NavModel.updateOne({"_id":req.body.id},req.body)
+        res.render('admin/public/success.ejs', {
         message: "修改数据成功",
         redirectUrl: '/admin/nav'
     })
-   
+    } catch (error) {
+        res.render('admin/public/error.ejs', {
+            message: "修改数据失败",
+            redirectUrl: '/admin/nav/edit?id='+req.body.id
+        })
+    }     
 })
 
 
