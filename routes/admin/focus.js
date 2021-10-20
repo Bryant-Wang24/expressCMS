@@ -16,7 +16,7 @@ router.get('/add', (req, res) => {
 
 router.post('/doadd', multer().single('focus_img'), async (req, res) => {
     console.log(req.file);
-    const focus_img = req.file ? req.file.path : ""
+    const focus_img = req.file ? req.file.path.substr(7) : ""
     const result = new focusModel((Object.assign(req.body, { "focus_img": focus_img })))
     await result.save()
     res.redirect("/admin/focus")
