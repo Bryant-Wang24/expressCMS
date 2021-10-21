@@ -2,6 +2,7 @@ const express = require("express")
 const focusModel = require("../../model/focusModel")
 const { multer } = require("../../model/tools")
 const router = express.Router()
+const fs = require("fs")
 
 router.get("/", async (req, res) => {
     const result = await focusModel.find({})
@@ -49,8 +50,17 @@ router.post("/doedit",multer().single('focus_img'), async(req,res)=>{
 // 删除数据
 router.get("/delete", async (req, res) => {
     const id = req.query.id
-    const result = await focusModel.deleteOne({"_id":id})
-    console.log(result);
+    const resultList = await focusModel.find({'_id':id})
+    const deleteResult = await focusModel.deleteOne({"_id":id})
+    console.log('resultList',resultList);
+    console.log('deleteResult',deleteResult.deletedCount);
+    if(deleteResult.deletedCount===1){
+        if(resultList[0].focus_img){
+            fs.unlink("static/"+resultList[0].focus_img,(err)=>{
+                console.log(err);
+            })
+        }
+    }
     res.render('admin/public/success.ejs', {
         message: "删除数据成功",
         redirectUrl: '/admin/focus'
