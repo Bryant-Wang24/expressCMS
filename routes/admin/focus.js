@@ -46,4 +46,15 @@ router.post("/doedit",multer().single('focus_img'), async(req,res)=>{
 
 })
 
+// 删除数据
+router.get("/delete", async (req, res) => {
+    const id = req.query.id
+    const result = await focusModel.deleteOne({"_id":id})
+    console.log(result);
+    res.render('admin/public/success.ejs', {
+        message: "删除数据成功",
+        redirectUrl: '/admin/focus'
+    })
+})
+
 module.exports = router
