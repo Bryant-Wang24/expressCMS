@@ -22,4 +22,28 @@ router.post('/doadd', multer().single('focus_img'), async (req, res) => {
     res.redirect("/admin/focus")
 })
 
+// 修改数据
+router.get("/edit", async (req, res) => {
+    const id = req.query.id
+    const result = await focusModel.find({"_id":id})
+    res.render("admin/focus/edit.ejs", {
+        list: result[0]
+    })
+})
+// 提交修改的数据
+router.post("/doedit",multer().single('focus_img'), async(req,res)=>{
+    console.log(req.file);
+    console.log(req.body);
+    // await focusModel.updateOne({"_id":req.body.id},req.body)
+    if(req.file){//如果修改了图片
+        const focus_img = req.file?req.file.path.substr(7):""
+        console.log(focus_img);
+        await focusModel.updateOne({"_id":req.body.id},Object.assign(req.body,{"focus_img":focus_img}))
+    }else{//如果没有修改图片
+        await focusModel.updateOne({"_id":req.body.id},req.body)
+    }
+    res.redirect("/admin/focus")
+
+})
+
 module.exports = router

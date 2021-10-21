@@ -1,4 +1,4 @@
-<%- include ("../public/page_header.html") %>
+<%- include ("../public/page_header.ejs") %>
 
 
 
@@ -8,7 +8,9 @@
     </div>
     <div class="panel-body">
         <div class="table-responsive input-form">
+            <!-- 提交修改的数据 -->
             <form action="/admin/focus/doEdit" method="post" enctype="multipart/form-data">
+                <!-- 隐藏表单域 -->
                 <input type="hidden" name="id" value="<%=list._id%>" />
                 <ul>
                     <li> <span>分　　类: </span>
