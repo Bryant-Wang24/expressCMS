@@ -33,8 +33,31 @@ router.get("/changeStatus", async (req, res) => {
         })
     } else {
         res.send({
-            success: true,
+            success: false,
             message: '修改状态失败'
+        })
+    }
+})
+
+router.get("/changeNum", async (req, res) => {
+    const id = req.query.id
+    const model = req.query.model + "Model"
+    const field = req.query.field//要修改的字段
+    const num = req.query.num
+    const result = await appModel[model].find({ "_id": id })
+    if (result.length > 0) {
+        let json = {
+            [field]: num
+        }
+        await appModel[model].updateOne({ "_id": id }, json)
+        res.send({
+            success: true,
+            message: '修改数量成功'
+        })
+    } else {
+        res.send({
+            success: false,
+            message: '修改数量失败'
         })
     }
 })
