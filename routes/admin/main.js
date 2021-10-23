@@ -1,6 +1,14 @@
 const express = require("express")
 const FocusModel = require('../../model/focusModel')
+const NavModel = require('../../model/navModel')
+const ManagerModel = require('../../model/managerModel')
 const router = express.Router()
+
+const appModel = {
+    FocusModel,
+    NavModel,
+    ManagerModel//缩写  ManagerModel:ManagerModel
+}
 
 router.get("/", (req, res) => {
     res.render("admin/main/index.ejs")
@@ -11,14 +19,14 @@ router.get("/welcome", (req, res) => {
 
 router.get("/changeStatus", async (req, res) => {
     const id = req.query.id
+    const model = req.query.model + "Model"
     const field = req.query.field//要修改的字段
-    console.log('长度', field);
     let json //要更新的数据
-    const result = await FocusModel.find({ "_id": id })
+    const result = await appModel[model].find({ "_id": id })
     if (result.length > 0) {
         const tempField = result[0][field]
         tempField === 1 ? json = { [field]: 0 } : json = { [field]: 1 }//es6里的属性名表达式
-        await FocusModel.updateOne({ "_id": id }, json)
+        await appModel[model].updateOne({ "_id": id }, json)
         res.send({
             success: true,
             message: '修改状态成功'
