@@ -34,8 +34,15 @@ var app = {
 			const id = $(this).attr("data-id")
 			const model = $(this).attr("data-model")
 			const field = $(this).attr("data-field")
+			const el = $(this)
 			$.get("/admin/changeStatus", { id: id, model: model, field: field }, (response) => {
-				console.log(response);
+				if (response.success) {
+					if (el.attr("src").indexOf("yes") !== -1) {
+						el.attr("src", "/admin/images/no.png")
+					} else {
+						el.attr("src", "/admin/images/yes.png")
+					}
+				}
 			})
 		})
 	}
