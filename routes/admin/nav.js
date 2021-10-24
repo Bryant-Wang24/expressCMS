@@ -27,7 +27,7 @@ router.post("/doadd", async (req, res) => {
 
     res.render('admin/public/success.ejs', {
         message: "增加数据成功",
-        redirectUrl: '/admin/nav'
+        redirectUrl: `/${req.app.locals.adminPath}/nav`
     })
 
 })
@@ -42,30 +42,30 @@ router.post("/doadd", tools.multer().single('uploadedfile'), (req, res) => {
     console.log(req.file, req.body)
 })
 
-router.get("/edit", async(req, res) => {
+router.get("/edit", async (req, res) => {
     const id = req.query.id
-    const result = await NavModel.find({"_id":id})
-    if(result.length>0){
-        res.render("admin/nav/edit.ejs",{
-            list:result[0]
+    const result = await NavModel.find({ "_id": id })
+    if (result.length > 0) {
+        res.render("admin/nav/edit.ejs", {
+            list: result[0]
         })
-    }else{
+    } else {
         res.render("/admin/nav")
     }
 })
-router.post("/doedit", async(req, res) => {
+router.post("/doedit", async (req, res) => {
     try {
-        await NavModel.updateOne({"_id":req.body.id},req.body)
+        await NavModel.updateOne({ "_id": req.body.id }, req.body)
         res.render('admin/public/success.ejs', {
-        message: "修改数据成功",
-        redirectUrl: '/admin/nav'
-    })
+            message: "修改数据成功",
+            redirectUrl: `/${req.app.locals.adminPath}/nav`
+        })
     } catch (error) {
         res.render('admin/public/error.ejs', {
             message: "修改数据失败",
-            redirectUrl: '/admin/nav/edit?id='+req.body.id
+            redirectUrl: `/${req.app.locals.adminPath}/nav/edit?id=${req.body.id}`
         })
-    }     
+    }
 })
 
 router.get('/delete', async (req, res) => {
@@ -75,7 +75,7 @@ router.get('/delete', async (req, res) => {
     console.log('要删除的数据', result);
     res.render('admin/public/success.ejs', {
         message: "删除数据成功",
-        redirectUrl: '/admin/nav'
+        redirectUrl: `/${req.app.locals.adminPath}/nav`
     })
 })
 

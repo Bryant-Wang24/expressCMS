@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 var session = require('express-session')
 // const ejs = require('ejs')
+// 引入配置文件
+const config = require('./config/config')
 
 // 配置session中间件
 app.use(session({
@@ -30,9 +32,12 @@ const index = require('./routes/index')
 const api = require('./routes/api')
 
 // 挂载模块
-app.use("/admin", admin)
+app.use("/" + config.adminPath, admin)
 app.use("/api", api)
 app.use("/", index)
+
+// 绑定全局模板变量
+app.locals.adminPath = config.adminPath
 
 app.get('/', (req, res) => {
     res.send('首页')

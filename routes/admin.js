@@ -13,7 +13,7 @@ router.use((req, res, next) => {
 
             next()//如果是登陆页面,则继续向下执行
         } else {
-            res.redirect("/admin/login")//如果不是登陆页面,则重定向到登陆页面
+            res.redirect(`/${req.app.locals.adminPath}/login`)//如果不是登陆页面,则重定向到登陆页面
         }
     }
 })

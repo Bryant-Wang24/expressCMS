@@ -36,14 +36,14 @@ router.post('/doedit', async (req, res) => {
     if (password.length > 0) {//修改密码
         if (password.length < 6) {
             res.render("admin/public/error.ejs", {
-                "redirectUrl": "/admin/manager/edit?id=" + id,
+                "redirectUrl": `/${req.app.locals.adminPath}/manager/edit?id=${id}`,
                 "message": "密码长度不能小于6位"
             })
             return
         }
         if (password !== rpassword) {
             res.render("admin/public/error.ejs", {
-                "redirectUrl": "/admin/manager/edit?id=" + id,
+                "redirectUrl": `/${req.app.locals.adminPath}/manager/edit?id=${id}`,
                 "message": "两次输入的密码不一致"
             })
             return
@@ -62,7 +62,7 @@ router.post('/doedit', async (req, res) => {
             "status": status
         })
     }
-    res.redirect("/admin/manager")
+    res.redirect(`/${req.app.locals.adminPath}/manager/`)
 })
 
 router.get('/delete', async (req, res) => {
@@ -72,7 +72,7 @@ router.get('/delete', async (req, res) => {
     console.log('要删除的数据', result);
     res.render('admin/public/success.ejs', {
         message: "删除数据成功",
-        redirectUrl: '/admin/manager/'
+        redirectUrl: `/${req.app.locals.adminPath}/manager/`
     })
 })
 
@@ -104,21 +104,21 @@ router.post('/doadd', async (req, res) => {
     // 验证数据是否合法
     if (username === '') {
         res.render("admin/public/error.ejs", {
-            "redirectUrl": "/admin/manager/add",
+            "redirectUrl": `/${req.app.locals.adminPath}/manager/add`,
             "message": "用户名不能为空"
         })
         return
     }
     if (password.length < 6) {
         res.render("admin/public/error.ejs", {
-            "redirectUrl": "/admin/manager/add",
+            "redirectUrl": `/${req.app.locals.adminPath}/manager/add`,
             "message": "密码长度不能小于6位"
         })
         return
     }
     if (password !== rpassword) {
         res.render("admin/public/error.ejs", {
-            "redirectUrl": "/admin/manager/add",
+            "redirectUrl": `/${req.app.locals.adminPath}/manager/add`,
             "message": "两次输入的密码不一致"
         })
         return
@@ -127,7 +127,7 @@ router.post('/doadd', async (req, res) => {
     let result = await ManagerModel.find({ "username": username, })
     if (result.length > 0) {
         res.render("admin/public/error.ejs", {
-            "redirectUrl": "/admin/manager/add",
+            "redirectUrl": `/${req.app.locals.adminPath}/manager/add`,
             "message": "当前用户已存在，请换一个用户名"
         })
         return
@@ -142,7 +142,7 @@ router.post('/doadd', async (req, res) => {
             addtime: getUnix()
         })
         await addResult.save()
-        res.redirect("/admin/manager")
+        res.redirect(`/${req.app.locals.adminPath}/manager`)
     }
 })
 

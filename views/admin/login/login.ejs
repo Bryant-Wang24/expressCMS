@@ -8,7 +8,7 @@
   <body>
     <div class="container">
       <div id="login">
-        <form action="/admin/login/dologin" method="post" id="myform">
+        <form action="/<%=adminPath%>/login/dologin" method="post" id="myform">
           <input type="hidden" name="ajaxlogin" id="ajaxlogin" />
           <input type="hidden" name="ajaxcode" id="ajaxcode" />
           <div class="l_title">CMS后台管理系统-IT营</div>
@@ -33,9 +33,9 @@
               验　证　码：<input id="verify" type="text" name="verify" />
               <img
                 id="verify_img"
-                src="/admin/login/verify"
+                src="/<%=adminPath%>/login/verify"
                 title="看不清？点击刷新"
-                onclick="javascript:this.src='/admin/login/verify?mt='+Math.random()"
+                onclick="javascript:this.src='/<%=adminPath%>/login/verify?mt='+Math.random()"
               />
             </dd>
             <dd>

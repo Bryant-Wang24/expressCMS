@@ -25,7 +25,7 @@ router.post("/dologin", async (req, res) => {
     if (verify.toLowerCase() !== req.session.captcha.toLowerCase()) {
         // 图形验证码失败
         res.render("admin/public/error.ejs", {
-            "redirectUrl": "/admin/login",//失败后跳转到原页面
+            "redirectUrl": `/${req.app.locals.adminPath}/login`,//失败后跳转到原页面
             "message": "图形验证码输入错误"
         })
         return
@@ -38,12 +38,12 @@ router.post("/dologin", async (req, res) => {
         req.session.userinfo = result[0]
         // 图形验证码成功
         res.render("admin/public/success.ejs", {
-            "redirectUrl": "/admin",//成功后跳转的页面
+            "redirectUrl": `/${req.app.locals.adminPath}`,//成功后跳转的页面
             "message": "登陆成功"
         })
     } else {
         res.render("admin/public/error.ejs", {
-            "redirectUrl": "/admin/login",//失败后跳转到原页面
+            "redirectUrl": `/${req.app.locals.adminPath}/login`,//失败后跳转到原页面
             "message": "用户名或则密码错误"
         })
     }
@@ -59,6 +59,6 @@ router.get('/verify', function (req, res) {
 });
 router.get('/loginout', function (req, res) {
     req.session.userinfo = null;//保存验证码
-    res.redirect("/admin/loginout")
+    res.redirect(`/${req.app.locals.adminPath}/loginout`)
 });
 module.exports = router

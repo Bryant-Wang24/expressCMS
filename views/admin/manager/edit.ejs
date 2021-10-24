@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
         <div class="table-responsive input-form">
-            <form action="/admin/manager/doedit" method="post" id="form">
+            <form action="/<%=adminPath%>/manager/doedit" method="post" id="form">
                 <input type="hidden" name="id" id="id" value="<%=list._id%>">
                 <ul>
                     <li> <span>管理员名称:</span><input type="text" name="username" id="username" readonly value="<%=list.username%>"/></li>
