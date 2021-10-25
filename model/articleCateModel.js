@@ -4,9 +4,12 @@ const ArticleCateSchema = mongoose.Schema({
     title: { type: String },
     link: { type: String },
     pid: { type: Schema.Types.Mixed },//混合类型
+
+    // 下面三行用于SEO优化
     sub_title: { type: String },
     keywords: { type: String },
     description: { type: String },
+
     status: { type: Number, default: 1 },
     sort: {
         type: Number, default: 100
