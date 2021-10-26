@@ -1,6 +1,7 @@
 const express = require('express')
 const { getUnix } = require("../../model/tools")
 const ArticleCateModel = require("../../model/articleCateModel")
+const mongoose = require('../../model/core')
 
 const router = express.Router()
 router.get("/", async (req, res) => {
@@ -17,7 +18,13 @@ router.get("/add", async (req, res) => {
     })
 })
 router.post("/doadd", async (req, res) => {
-
+    if(req.body.pid!=="0"){
+        req.body.pid = mongoose.Types.ObjectId(req.body.pid)
+    }
+    req.body.add_time = getUnix()
+    const result = new ArticleCateModel(req.body)
+    await result.save()
+    res.redirect(`/${req.app.locals.adminPath}/articleCate`)
 })
 
 module.exports = router
