@@ -2,12 +2,14 @@ const express = require("express")
 const FocusModel = require('../../model/focusModel')
 const NavModel = require('../../model/navModel')
 const ManagerModel = require('../../model/managerModel')
+const ArticleCateModel = require('../../model/articleCateModel')
 const router = express.Router()
 
 const appModel = {
     FocusModel,
     NavModel,
-    ManagerModel//缩写  ManagerModel:ManagerModel
+    ManagerModel,//缩写  ManagerModel:ManagerModel
+    ArticleCateModel
 }
 
 router.get("/", (req, res) => {

@@ -4,7 +4,7 @@ $(function () {
 });
 
 var app = {
-
+	adminPath:'admin_express',
 	init() {
 		this.toggleAside();
 		this.deleteConfirm();
@@ -31,12 +31,13 @@ var app = {
 		})
 	},
 	changeStatus: function () {
+		const adminPath = this.adminPath
 		$(".chStatus").click(function () {
 			const id = $(this).attr("data-id")
 			const model = $(this).attr("data-model")
 			const field = $(this).attr("data-field")
 			const el = $(this)
-			$.get("/admin/changeStatus", { id: id, model: model, field: field }, (response) => {
+			$.get("/"+adminPath+"/changeStatus", { id: id, model: model, field: field }, (response) => {
 				if (response.success) {
 					if (el.attr("src").indexOf("yes") !== -1) {
 						el.attr("src", "/admin/images/no.png")

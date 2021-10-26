@@ -5,7 +5,21 @@ const mongoose = require('../../model/core')
 
 const router = express.Router()
 router.get("/", async (req, res) => {
-    const result = []
+    const result = await ArticleCateModel.aggregate([
+        {
+            $lookup:{
+                from:"article_cate",
+                localField:"_id",
+                foreignField:"pid",
+                as:"items"
+            }
+        },
+        {
+            $match:{
+                pid:"0"
+            }
+        }
+    ])
     res.render("admin/articleCate/index.ejs", {
         list: result
     })
