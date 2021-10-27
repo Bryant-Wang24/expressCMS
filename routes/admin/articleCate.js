@@ -44,10 +44,8 @@ router.post("/doadd", async (req, res) => {
 
 router.get("/edit", async (req, res) => {
     const id = req.query.id
-    console.log('id',id);
     const result = await ArticleCateModel.find({"_id":id})
     const topCateList = await ArticleCateModel.find({ "pid": "0" })
-    console.log('result',result);
     res.render("admin/articleCate/edit.ejs",{
         list:result[0],
         cateList:topCateList
@@ -66,6 +64,24 @@ router.post("/doedit", async (req, res) => {
         "message": "修改数据失败"
     })
    }
+})
+router.get("/delete", async (req, res) => {
+    const id = req.query.id
+    const subResult = await ArticleCateModel.find({"pid":mongoose.Types.ObjectId(id)})
+    if(subResult.length>0){
+        res.render("admin/public/error.ejs", {
+            "redirectUrl": `/${req.app.locals.adminPath}/articleCate`,
+            "message": "当前分类无法删除，请删除下面的子分类后重试"
+        })
+    }else{
+        await ArticleCateModel.deleteOne({"_id":id})
+        res.render("admin/public/sUccess.ejs", {
+            "redirectUrl": `/${req.app.locals.adminPath}/articleCate`,
+            "message": "删除数据成功"
+        })
+    }
+    
+
 })
 
 module.exports = router
