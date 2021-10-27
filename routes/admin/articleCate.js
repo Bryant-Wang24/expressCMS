@@ -53,5 +53,19 @@ router.get("/edit", async (req, res) => {
         cateList:topCateList
     })
 })
+router.post("/doedit", async (req, res) => {
+   try {
+       if(req.body.pid!=="0"){
+           req.body.pid = mongoose.Types.ObjectId(req.body.pid)
+       }
+       await ArticleCateModel.updateOne({"_id":req.body.id},req.body)
+       res.redirect(`/${req.app.locals.adminPath}/articleCate`)
+   } catch (error) {
+    res.render("admin/public/error.ejs", {
+        "redirectUrl": `/${req.app.locals.adminPath}/articleCate/edit?id=${req.body.id}`,
+        "message": "修改数据失败"
+    })
+   }
+})
 
 module.exports = router
