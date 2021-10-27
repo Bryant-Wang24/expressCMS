@@ -27,6 +27,7 @@ router.get("/", async (req, res) => {
 router.get("/add", async (req, res) => {
     // 获取顶级分类
     const topCateList = await ArticleCateModel.find({ "pid": "0" })
+    console.log('topCateList',topCateList);
     res.render("admin/articleCate/add.ejs", {
         cateList: topCateList
     })
@@ -39,6 +40,18 @@ router.post("/doadd", async (req, res) => {
     const result = new ArticleCateModel(req.body)
     await result.save()
     res.redirect(`/${req.app.locals.adminPath}/articleCate`)
+})
+
+router.get("/edit", async (req, res) => {
+    const id = req.query.id
+    console.log('id',id);
+    const result = await ArticleCateModel.find({"_id":id})
+    const topCateList = await ArticleCateModel.find({ "pid": "0" })
+    console.log('result',result);
+    res.render("admin/articleCate/edit.ejs",{
+        list:result[0],
+        cateList:topCateList
+    })
 })
 
 module.exports = router
