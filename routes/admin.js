@@ -26,6 +26,7 @@ const manager = require('./admin/manager')
 const main = require("./admin/main")
 const focus = require("./admin/focus")
 const articleCate = require('./admin/articleCate')
+const article = require('./admin/article')
 
 
 
@@ -41,6 +42,7 @@ router.use('/manager', manager)
 router.use('/user', user)
 router.use('/focus', focus)
 router.use("/articleCate", articleCate)
+router.use("/article", article)
 
 
 module.exports = router
