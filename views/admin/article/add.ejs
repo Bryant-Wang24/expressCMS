@@ -68,13 +68,13 @@
                             <li> <span>内容标题: </span> <input type="text" name="title" /></li>
 
                             <li> <span>封面图:</span> <input type="file" name="article_img" /></li>
-                            <li> <span>作　　者: </span> <input type="text" name="author" /></li>
-                            <li> <span>排　　序: </span> <input type="text" name="sort" value="1000" /></li>
-                            <li> <span>状　　态: </span> <input type="radio" name="status" checked value="1" id="a" />
+                            <li> <span>作者: </span> <input type="text" name="author" /></li>
+                            <li> <span>排序: </span> <input type="text" name="sort" value="1000" /></li>
+                            <li> <span>状态: </span> <input type="radio" name="status" checked value="1" id="a" />
                                 <label for="a">显示</label> <input type="radio" name="status" value="0" id="b" /><label
-                                    for="b">隐藏</label> 　</li>
+                                    for="b">隐藏</label> </li>
 
-                            <li> <span>加入推荐:</span>　
+                            <li> <span>加入推荐:</span>
                                 <input type="checkbox" value="1" name="is_best" /> 精品
                                 <input type="checkbox" value="1" name="is_hot" /> 热门
                             </li>
@@ -110,7 +110,8 @@
 
     new FroalaEditor('#content', {
           height: 260,//配置富文本高度，详见文档https://froala.com/wysiwyg-editor/docs/overview/：
-          language: 'zh_cn'//汉化
+          language: 'zh_cn',//汉化
+          imageUploadURL:'/<%=adminPath%>/article/doUploadImage'
     });
   </script>
 </body>
