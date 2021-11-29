@@ -5,9 +5,14 @@ const ArticleModel = require("../../model/articleModel")
 const { multer } = require('../../model/tools')
 
 router.get("/", async (req, res) => {
-    const result = await ArticleModel.find({})
+    const page = req.query.page || 1
+    const pageSize = 2
+    const result = await ArticleModel.find({}).skip((page-1)*pageSize).limit(pageSize)
+    const count = await ArticleModel.count({})
     res.render("admin/article/index.ejs", {
-        list: result
+        list: result,
+        totalPages:Math.ceil(count/pageSize),
+        page:page
     })
 })
 router.get("/add", async (req, res) => {

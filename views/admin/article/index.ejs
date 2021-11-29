@@ -1,4 +1,7 @@
 <%- include ("../public/page_header.ejs")%>
+
+<script type="text/javascript" src="/admin/js/jqPaginator.js"></script>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <a href="/<%=adminPath%>/article/add" class="btn btn-primary">增加内容</a>
@@ -45,3 +48,20 @@
     </table>
   </div>
 </div>
+<div class="pagination" id="pagination">
+</div>
+
+<script>
+  $('#pagination').jqPaginator({
+    totalPages:<%=totalPages%>,
+    visible:5,
+    currentPage:<%=page%>,
+    onPageChange:function(num,type){
+      // $('#text').html('当前第'+num+'页')
+      if(type==='change'){
+        location.href = "/<%=adminPath%>/article?page="+num
+      }
+      console.log('当前第'+ num +'页');
+    }
+  })
+</script>
