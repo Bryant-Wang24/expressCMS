@@ -8,30 +8,31 @@ router.get("/", async (req, res) => {
     const page = req.query.page || 1
     const pageSize = 2
 
-    // 关联查询的分页
-    const result = await ArticleCateModel.aggregate([
-        {
-            $lookup: {
-                from: "article_cate",
-                localField: "_id",
-                foreignField: "pid",
-                as: "cate"
-            }
-        },
-        // {
-        //     $match: {
-        //         pid: "0"
-        //     }
-        // },
-        {
-            $sort:{"add_time":-1}
-        },{
-            $skip:(page-1)*pageSize
-        },{
-            $limit:pageSize
-        }
-    ])
-    // const result = await ArticleModel.find({}).skip((page-1)*pageSize).limit(pageSize)
+    // // 关联查询的分页
+    // const result = await ArticleCateModel.aggregate([
+    //     {
+    //         $lookup: {
+    //             from: "article_cate",
+    //             localField: "_id",
+    //             foreignField: "pid",
+    //             as: "cate"
+    //         }
+    //     },
+    //     // {
+    //     //     $match: {
+    //     //         pid: "0"
+    //     //     }
+    //     // },
+    //     {
+    //         $sort:{"add_time":-1}
+    //     },{
+    //         $skip:(page-1)*pageSize
+    //     },{
+    //         $limit:pageSize
+    //     }
+    // ])
+
+    const result = await ArticleModel.find({}).skip((page-1)*pageSize).limit(pageSize)
     const count = await ArticleModel.count({})
     res.render("admin/article/index.ejs", {
         list: result,
