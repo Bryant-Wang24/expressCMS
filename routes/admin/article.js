@@ -114,9 +114,14 @@ router.post("/doEdit", multer().single('article_img'), async (req, res) => {
 
 })
 
-
-
-
+router.get("/delete", async (req, res) => {
+    const id = req.query.id
+    await ArticleModel.deleteOne({"_id":id})
+    res.render("admin/public/sUccess.ejs", {
+        "redirectUrl": `/${req.app.locals.adminPath}/article`,
+        "message": "删除数据成功"
+    })
+})
 
 // 富文本编辑器上传图片
 router.post("/doUploadImage", multer().single('file'), (req, res) => {
